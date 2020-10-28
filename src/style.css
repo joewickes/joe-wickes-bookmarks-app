@@ -1,0 +1,175 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+/* Heading */
+
+.heading {
+  width: 70vw;
+  margin: 30px;
+}
+
+.heading h1 {
+  text-align: center;
+  width: 100%;
+  font-size: 35px;
+}
+
+
+/* Buttons */
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  width: 70vw;
+  margin-bottom: 30px;
+}
+
+.left-button, .right-button {
+  display: flex;
+  flex: 1;
+  width: 100%;
+}
+
+.right-button {
+  display: flex;
+  justify-content: flex-end;
+}
+
+#new {
+  padding: 10px;
+  font-size: 17px;
+  width: 90%;
+  border-radius: 6px;
+  border: .5px solid black;
+}
+
+#rating-filter {
+  width: 90%
+}
+
+#rating-filter select {
+  padding: 10px;
+  font-size: 17px;
+  width: 100%;
+  background-color: #EFEFEF;
+  border-radius: 6px;
+  border: .5px solid black;
+}
+
+
+/* List */
+
+ul {
+  border: 2px solid black;
+}
+
+li {
+  list-style-type: none;
+}
+
+.li-title {
+  border: .5px solid black;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+.bookmark-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 70vw;
+}
+
+.bookmark-display ul {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%
+}
+
+.bookmark-display ul li {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.left-li-block {
+  display: flex;
+  justify-content: flex-start;
+  flex: 1;
+  width: 100%;
+  margin: 10px 0 10px 10px;
+}
+
+.right-li-block {
+  justify-content: flex-end;
+  margin: 10px 10px 10px 0;
+}
+
+.left-li-block p, .right-li-block p {
+  font-size: 15px;
+}
+
+.expanded-title {
+  background-color: #CFCFCF;
+}
+
+.expanded-info {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.expanded-info div {
+  margin: 10px;
+  flex: 1;
+}
+
+.expanded-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.expanded-top {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.visit-container {
+  display: flex;
+  justify-content: center;
+}
+
+.visit-button {
+  padding: 7px;
+  font-size: 14px;
+  width: 90%;
+}
+
+.expanded-star {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.expanded-container {
+  display: flex;
+  justify-content: center;
+}
+
+
+/* Heading */
+
+

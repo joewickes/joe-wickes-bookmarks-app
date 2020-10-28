@@ -4,8 +4,84 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+<!-- My Bookmarks -->
+  <section class="heading">
+    <h1>My Bookmarks</h1>
+  </section>
+
+  <!-- Buttons -->
+  <section class="buttons">
+    <!-- New Button -->
+    <div class="left-button">
+      <button id="new">+ New</button>
+    </div>
+
+    <!-- Filter Button -->
+    <div class="right-button">
+      <form id="rating-filter">
+        <select name="" id="rating">
+          <option value="">Filter By</option>
+          <option value="five">*****</option>
+          <option value="four">****</option>
+          <option value="three">***</option>
+          <option value="two">**</option>
+          <option value="one">*</option>
+        </select>
+      </form>
+    </div>
+
+  </section>
   
+  <!-- Bookmark List -->
+  <section class="bookmark-display">
+    <ul>
+      <!-- List Item -->
+      <li>
+        <div class="li-title expanded-title">
+          <!-- Title -->
+          <div class="left-li-block">
+            <p>One thing</p>
+          </div>
+          <!-- Stars -->
+          <div class="right-li-block">
+            <p>Stars</p>
+          </div>
+        </div>
+        <div class="expanded-info">
+          <div class="expanded-top">
+            <div class="visit-container">
+              <button class="visit-button">Visit Site</button>
+            </div>
+            <div class="expanded-star">
+              <p># Stars</p>
+            </div>
+          </div>
+          <div class="description">
+            <div class="expanded-description">
+              <p>Description</p>
+            </div>
+          </div>
+        </div>
+      </li>
+      <!-- List Item -->
+      <li>
+        <div class="li-title">
+          <!-- Title -->
+          <div class="left-li-block">
+            <p>One thing</p>
+          </div>
+          <!-- Stars -->
+          <div class="right-li-block">
+            <p>Stars</p>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </section>
+
 </body>
 </html>
