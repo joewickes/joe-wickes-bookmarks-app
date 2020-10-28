@@ -11,17 +11,14 @@ import store from './store';
 import bookLi from './bookmark-list';
 
 function main() {
-  console.log(store.localBookmarks);
-
-  api.getBookmarks()
-    .then(bookmarks => {
-      store.createStoreArray(bookmarks);
-
-    });
-
-  console.log(store.localBookmarks);
-
-  bookLi.renderMain();
+  
+  api.createBookmark()
+    .then(() => api.getBookmarks())
+    .then(res => {
+      store.createStoreArray(res);
+      bookLi.renderMain();
+    })
+  ;
 }
 
 $(main);
