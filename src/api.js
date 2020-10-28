@@ -8,13 +8,13 @@ function getBookmarks() { // returns an array of current objects
     .then(response => response.json());
 }
 
-function createBookmark() {
+function createBookmark(newObj) {
   return fetch(baseUrl, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({title: 'a Bookmark', url: 'https://example.com', rating: 4}),
+    body: newObj,
   })
     .then(response => response.json())
     .then(log => console.log(log))

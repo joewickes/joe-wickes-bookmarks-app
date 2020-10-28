@@ -1,5 +1,7 @@
 import $ from 'jquery';
 import store from './store';
+import cuid from 'cuid';
+import api from './api';
 
 function createHeadingSection() {
   return `
@@ -99,7 +101,7 @@ function createFormSection() {
             </div>
           </div>
 
-          <textarea name="description" id="" cols="30" rows="10" placeholder="Add a description (optional)"></textarea>
+          <textarea name="desc" id="" cols="30" rows="10" placeholder="Add a description (optional)" value=""></textarea>
         </div>
       </form>
       <div class="form-buttons">
@@ -168,6 +170,10 @@ $.fn.extend({
     const formData = new FormData(this[0]);
     const o = {};
     formData.forEach((val, name) => o[name] = val);
+    o.id = cuid();
+    o.expanded = "false";
+    console.log('serialize', o);
+    console.log(JSON.stringify(o));
     return JSON.stringify(o);
   }
 });
@@ -178,15 +184,13 @@ function submitNew() {
 
     console.log('submit clicked');
 
-    let a = $(e.target).serializeJson();
+    let newObj = $(e.target).serializeJson();
 
-    console.log(a);
-  
-    store.adding = false;
-    renderMain();
+    console.log('submit', newObj);
 
-    
-  });
+    api.createBookmark(newObj);
+
+    // Add only the new item
 }
 
 export default {
