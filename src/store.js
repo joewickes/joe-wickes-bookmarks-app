@@ -2,9 +2,9 @@ import cuid from 'cuid';
 import api from './api';
 
 const localBookmarks = [];
-const a = 'howdy';
-
+let adding = false;
 let error = null;
+let filter = 0;
 
 function createStoreArray(apiBookmarks) { //Works
   apiBookmarks.forEach(bookmark => {
@@ -13,7 +13,9 @@ function createStoreArray(apiBookmarks) { //Works
 }
 
 export default {
-  a,
   localBookmarks,
+  adding,
+  error, 
+  filter,
   createStoreArray,
 };

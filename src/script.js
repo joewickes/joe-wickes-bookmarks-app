@@ -12,11 +12,15 @@ import bookLi from './bookmark-list';
 
 function main() {
   
-  api.createBookmark()
-    .then(() => api.getBookmarks())
+  // api.createBookmark()
+  //   .then(() => 
+  api.getBookmarks()
     .then(res => {
       store.createStoreArray(res);
       bookLi.renderMain();
+      bookLi.clickNew();
+      bookLi.clickCancel();
+      bookLi.submitNew();
     })
   ;
 }
