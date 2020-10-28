@@ -11,6 +11,7 @@ import store from './store';
 
 function main() {
   console.log('Page loaded');
+  api.getBookmarks();
 }
 
 $(main);
