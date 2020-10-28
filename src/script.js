@@ -10,8 +10,17 @@ import api from './api';
 import store from './store';
 
 function main() {
-  console.log('Page loaded');
-  api.getBookmarks();
+  console.log(store.localBookmarks);
+
+  api.getBookmarks()
+    .then(bookmarks => {
+      store.createStoreArray(bookmarks);
+
+    });
+
+  console.log(store.localBookmarks);
+
+  
 }
 
 $(main);

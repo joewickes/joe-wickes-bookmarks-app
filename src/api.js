@@ -1,14 +1,11 @@
 const baseUrl = 'https://thinkful-list-api.herokuapp.com/joewickes/bookmarks/';
 
-const getBookmarks = () => {
+const getBookmarks = () => { // returns an array of current objects
+  //return the results of this function
   // fetch the api
-  fetch(baseUrl)
+  return fetch(baseUrl)
     // if it successfully fetches, parse the response
-    .then(response => response.json())
-    // if it successfully parses the response, log it 
-    .then(parsed => {
-      console.log(parsed);
-    });
+    .then(response => response.json());
 };
 
 console.log('api page connected');
