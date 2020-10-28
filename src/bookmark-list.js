@@ -70,36 +70,36 @@ function createFormSection() {
       <form id="new-bookmark-form">
         <div class="link-text-container">
           <label for="link-text">Add a new bookmark</label>
-          <input type="text" name="" id="link-text" required>
+          <input type="text" name="url" id="link-text" required>
         </div>
 
         <div class="description-container">
-          <input type="text" name="" id="link-title" placeholder="Link Title" required>
+          <input type="text" name="title" id="link-title" placeholder="Link Title" required>
           
           <div class="star-input">
             <div class="star">
               <label for="star-1">1</label>
-              <input type="radio" name="stars" id="star-1" value="1">
+              <input type="radio" name="rating" id="star-1" value="1">
             </div>
             <div class="star">
               <label for="star-2">2</label>
-              <input type="radio" name="stars" id="star-2" value="2">
+              <input type="radio" name="rating" id="star-2" value="2">
             </div>
             <div class="star">
               <label for="star-3">3</label>
-              <input type="radio" name="stars" id="star-3" value="3">
+              <input type="radio" name="rating" id="star-3" value="3">
             </div>
             <div class="star">
               <label for="star-4">4</label>
-              <input type="radio" name="stars" id="star-4" value="4">
+              <input type="radio" name="rating" id="star-4" value="4">
             </div>
             <div class="star">
               <label for="star-5">5</label>
-              <input type="radio" name="stars" id="star-5" value="5" checked>
+              <input type="radio" name="rating" id="star-5" value="5" checked>
             </div>
           </div>
 
-          <textarea name="" id="" cols="30" rows="10" placeholder="Add a description (optional)"></textarea>
+          <textarea name="description" id="" cols="30" rows="10" placeholder="Add a description (optional)"></textarea>
         </div>
       </form>
       <div class="form-buttons">
@@ -163,14 +163,29 @@ function clickCancel() {
   });
 }
 
+$.fn.extend({
+  serializeJson: function() {
+    const formData = new FormData(this[0]);
+    const o = {};
+    formData.forEach((val, name) => o[name] = val);
+    return JSON.stringify(o);
+  }
+});
+
 function submitNew() {
   $('body').on('submit', '#new-bookmark-form', function(e) {
     e.preventDefault();
 
     console.log('submit clicked');
+
+    let a = $(e.target).serializeJson();
+
+    console.log(a);
   
     store.adding = false;
     renderMain();
+
+    
   });
 }
 
