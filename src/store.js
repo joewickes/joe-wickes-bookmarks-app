@@ -1,7 +1,7 @@
 import cuid from 'cuid';
 import api from './api';
 
-const localBookmarks = [];
+const localBookmarks = [{title: 'First thing', rating: 5},{title: 'Second thing', rating: 4}];
 const a = 'howdy';
 
 let error = null;

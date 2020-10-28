@@ -8,6 +8,7 @@ import './style.css';
 // Import api and store modules to access their info
 import api from './api';
 import store from './store';
+import bookLi from './bookmark-list';
 
 function main() {
   console.log(store.localBookmarks);
@@ -20,7 +21,7 @@ function main() {
 
   console.log(store.localBookmarks);
 
-  
+  bookLi.renderMain();
 }
 
 $(main);
