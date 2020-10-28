@@ -10,7 +10,7 @@ import api from './api';
 import store from './store';
 
 function main() {
-  api.fetchAndParse(api.BASEURL);
+  console.log('Page loaded');
 }
 
 $(main);
