@@ -8,8 +8,9 @@ function getBookmarks() { // returns an array of current objects
     .then(response => response.json());
 }
 
-function createBookmark(newObj) {
-  return fetch(baseUrl, {
+function createBookmark(id, newObj) {
+  
+  return fetch(baseUrl + `/${id}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -20,10 +21,23 @@ function createBookmark(newObj) {
   ;
 }
 
+function editBookmark(id, editObj) {
+  return fetch(baseUrl, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: editObj,
+  })
+    .then(response => response.json())
+  ;
+}
+
 
 export default {
   baseUrl,
   getBookmarks,
   createBookmark,
+  editBookmark,
 };
 

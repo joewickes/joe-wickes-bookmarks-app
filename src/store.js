@@ -1,5 +1,6 @@
 const localBookmarks = [];
 let adding = false;
+let editing = false;
 let error = null;
 let filter = 0;
 
@@ -7,16 +8,17 @@ function createStoreArray(apiBookmarks) { //Works
   apiBookmarks.forEach(bookmark => {
     this.localBookmarks.push(bookmark);
   });
-  addExpandToBookmarks(this.localBookmarks);
+  addExtrasToBookmarks(this.localBookmarks);
 }
 
 function addNewBookmark(obj) {
   this.localBookmarks.push(obj);
 }
 
-function addExpandToBookmarks(localBookmarksArray) {
+function addExtrasToBookmarks(localBookmarksArray) {
   localBookmarksArray.forEach(bookmark => {
     bookmark.expanded = false;
+    bookmark.updated = false;
   });
 }
 
@@ -32,9 +34,14 @@ function toggleExpanded(index) {
   }
 }
 
+function changeBookmark() {
+  
+}
+
 export default {
   localBookmarks,
   adding,
+  editing,
   error, 
   filter,
   createStoreArray,

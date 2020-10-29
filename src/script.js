@@ -19,6 +19,7 @@ function main() {
       bookLi.clickCancel();
       bookLi.submitNew();
       bookLi.clickBookmark();
+      bookLi.submitUpdate();
     })
   ;
 }

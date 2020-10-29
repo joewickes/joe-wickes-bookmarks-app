@@ -154,6 +154,56 @@ function createFormSection() {
   `;
 }
 
+function createUpdateSection() {
+  return `
+    <section class="new-bookmark-section">
+      <form id="update-bookmark-form">
+        <div class="link-text-container">
+          <label for="link-text">Update a bookmark</label>
+          <input type="text" name="url" id="link-text" required>
+        </div>
+
+        <div class="description-container">
+          <input type="text" name="title" id="link-title" placeholder="Link Title" required>
+          
+          <div class="star-input">
+            <div class="star">
+              <label for="star-1">1</label>
+              <input type="radio" name="rating" id="star-1" value="1">
+            </div>
+            <div class="star">
+              <label for="star-2">2</label>
+              <input type="radio" name="rating" id="star-2" value="2">
+            </div>
+            <div class="star">
+              <label for="star-3">3</label>
+              <input type="radio" name="rating" id="star-3" value="3">
+            </div>
+            <div class="star">
+              <label for="star-4">4</label>
+              <input type="radio" name="rating" id="star-4" value="4">
+            </div>
+            <div class="star">
+              <label for="star-5">5</label>
+              <input type="radio" name="rating" id="star-5" value="5" checked>
+            </div>
+          </div>
+
+          <textarea name="desc" id="" cols="30" rows="10" placeholder="Add a description (optional)" value=""></textarea>
+        </div>
+      </form>
+      <div class="form-buttons">
+        <div class="left-button">
+          <button id="cancel">Cancel</button>
+        </div>
+        <div class="right-button">
+          <button type="submit" id="update" form="update-bookmark-form">Update</button>
+        </div>
+      </div>
+    </section>
+  `;
+}
+
 function createHomePage() {
   const heading = createHeadingSection();
   const homeButtons = createNewAndFilterButtonsSection();
@@ -169,12 +219,21 @@ function createFormPage() {
   return heading + form;
 }
 
+function createEditPage() {
+  const heading = createHeadingSection();
+  const form = createUpdateSection();
+
+  return heading + form;
+}
+
 function renderMain() {
   let createdPage = null;
 
-  if (store.adding) {
+  if(store.editing) {
+    createdPage = createEditPage();
+  } else if (store.adding) {
     createdPage = createFormPage();
-  } else if (!store.adding) {
+  } else {
     createdPage = createHomePage();
   }
 
@@ -184,8 +243,8 @@ function renderMain() {
 function clickNew() {
   $('body').on('click', '#new', function(e) {
     e.preventDefault();
-  
     store.adding = true;
+    
     renderMain();
   });
 }
@@ -194,13 +253,19 @@ function clickCancel() {
   $('body').on('click', '#cancel', function(e) {
     e.preventDefault();
 
-    store.adding = false;
+    if (store.adding) {
+      store.adding = false;
+    } else if (store.editing) {
+      store.editing = false;
+    }
+
     renderMain();
+    clickEdit();
   });
 }
 
 $.fn.extend({
-  serializeJson: function() {
+  serializeJson: function(id = null) {
     const formData = new FormData(this[0]);
     const o = {};
     formData.forEach((val, name) => o[name] = val);
@@ -211,6 +276,8 @@ $.fn.extend({
 
 function submitNew() {
   $('body').on('submit', '#new-bookmark-form', function(e) {
+    // if store.editing is true, then submit patch
+    // if store.editing is false, then submit new
     e.preventDefault();
 
     let newObj = $(e.target).serializeJson();
@@ -237,11 +304,32 @@ function clickBookmark() {
 }
 
 function clickEdit() {
-  $('li').on('click', '.edit', function() {
-    console.log('edit clicked');
+  $('li').on('click', '.edit', function(e) {
+    const id = $(this).parent().parent().parent().parent().attr('id');
+    const index = store.findIndex(id);
+
+    store.editing = true;
 
     renderMain();
     clickEdit();
+  });
+}
+
+function submitUpdate(id) {
+  $('body').on('submit', '#update-bookmark-form', function(e) {
+    e.preventDefault();
+    console.log('updating');
+
+    // let newObj = $(e.target).serializeJson();
+
+    // api.updateBookmark(id, newObj)
+    //   .then(obj => {
+    //     store.changeBookmark(obj);
+    //     store.editing = false;
+    //     renderMain();
+    //   });
+    store.editing = false;
+    renderMain();
   });
 }
 
@@ -260,4 +348,5 @@ export default {
   submitNew,
   clickBookmark,
   clickEdit,
+  submitUpdate,
 };
