@@ -146,8 +146,6 @@ function renderMain() {
 function clickNew() {
   $('body').on('click', '#new', function(e) {
     e.preventDefault();
-
-    console.log('new clicked');
   
     store.adding = true;
     renderMain();
@@ -157,8 +155,6 @@ function clickNew() {
 function clickCancel() {
   $('body').on('click', '#cancel', function(e) {
     e.preventDefault();
-
-    console.log('cancel clicked');
 
     store.adding = false;
     renderMain();
