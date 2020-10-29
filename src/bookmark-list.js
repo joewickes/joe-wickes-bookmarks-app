@@ -58,7 +58,7 @@ function createLiElement(singleBookmark) {
           </div>
           <div class="expanded-top">
             <div class="visit-container">
-              <button class="visit-button">Visit Site</button>
+            <a href="${singleBookmark.url}" target="_blank"><button class="visit-button" id="visit">Visit Site</button></a>
             </div>
             <div class="expanded-star">
               <p>${singleBookmark.rating} Stars</p>
@@ -225,13 +225,22 @@ function submitNew() {
 }
 
 function clickBookmark() {
-  $('body').on('click', 'li', function(e) {
-    const id = $(this).attr('id');
+  $('body').on('click', '.li-title', function(e) {
+    const id = $(this).parent().attr('id');
+    const index = store.findIndex(id);
 
     // use id to update api and then re-render
-
-    console.log(id);
+    store.toggleExpanded(index);
+    renderMain();
   });
+}
+
+function clickVisit() {
+  $('body').on('click', '#visit', function(e) {
+    console.log('Visit clicked');
+
+    renderMain();
+  })
 }
 
 export default {
@@ -240,4 +249,5 @@ export default {
   clickCancel,
   submitNew,
   clickBookmark,
+  clickVisit,
 };
