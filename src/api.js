@@ -17,8 +17,6 @@ function createBookmark(newObj) {
     body: newObj,
   })
     .then(response => response.json())
-    .then(log => console.log(log))
-    .catch(error => console.log(error))
   ;
 }
 

@@ -182,15 +182,15 @@ function submitNew() {
   $('body').on('submit', '#new-bookmark-form', function(e) {
     e.preventDefault();
 
-    console.log('submit clicked');
-
     let newObj = $(e.target).serializeJson();
 
-    console.log('submit', newObj);
-
-    api.createBookmark(newObj);
-
-    // Add only the new item
+    api.createBookmark(newObj)
+      .then(obj => {
+        store.addNewBookmark(obj);
+        store.adding = false;
+        renderMain();
+      });
+  });
 }
 
 export default {

@@ -12,10 +12,15 @@ function createStoreArray(apiBookmarks) { //Works
   });
 }
 
+function addNewBookmark(obj) {
+  this.localBookmarks.push(obj);
+}
+
 export default {
   localBookmarks,
   adding,
   error, 
   filter,
   createStoreArray,
+  addNewBookmark,
 };
