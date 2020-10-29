@@ -22,11 +22,11 @@ function createNewAndFilterButtonsSection() {
         <form id="rating-filter">
           <select name="" id="rating">
             <option value="">Filter By</option>
-            <option value="five">*****</option>
-            <option value="four">****</option>
-            <option value="three">***</option>
-            <option value="two">**</option>
-            <option value="one">*</option>
+            <option value="5">5 Stars</option>
+            <option value="4">4 Stars</option>
+            <option value="3">3 Stars</option>
+            <option value="2">2 Stars</option>
+            <option value="1">1 Star</option>
           </select>
         </form>
       </div>
@@ -88,8 +88,10 @@ function createLiElement(singleBookmark) {
   `;
 }
 
-function createAllLiElements(allBookmarks) {
-  const liArr = allBookmarks.map(bookmark => {
+function createAllLiElements(allBookmarks, filter) {
+  let filt = parseInt(filter);
+  const filtArr = allBookmarks.filter(bookmark => parseInt(bookmark.rating) >= filt);
+  const liArr = filtArr.map(bookmark => {
     return createLiElement(bookmark);
   });
 
@@ -207,7 +209,7 @@ function createUpdateSection() {
 function createHomePage() {
   const heading = createHeadingSection();
   const homeButtons = createNewAndFilterButtonsSection();
-  const list = createAllLiElements(store.localBookmarks);
+  const list = createAllLiElements(store.localBookmarks, store.filter);
 
   return heading + homeButtons + list;
 }
@@ -253,14 +255,13 @@ function clickCancel() {
   $('body').on('click', '#cancel', function(e) {
     e.preventDefault();
 
-    if (store.adding) {
-      store.adding = false;
-    } else if (store.editing) {
-      store.editing = false;
-    }
+    store.adding = false;
+    store.editing = false;
+    store.edId = null;
 
     renderMain();
     clickEdit();
+    clickDelete();
   });
 }
 
@@ -300,6 +301,7 @@ function clickBookmark() {
     store.toggleExpanded(index);
     renderMain();
     clickEdit();
+    clickDelete();
   });
 }
 
@@ -309,37 +311,73 @@ function clickEdit() {
     const index = store.findIndex(id);
 
     store.editing = true;
+    store.edId = id;
 
     renderMain();
     clickEdit();
+    clickDelete();
   });
 }
 
-function submitUpdate(id) {
+function submitUpdate() {
   $('body').on('submit', '#update-bookmark-form', function(e) {
     e.preventDefault();
-    console.log('updating');
+    const url = $("input[name=url]").val();
+    const title = $("input[name=title]").val();
+    const rating = $("input[name=rating]:checked").val();
+    const desc = $("textarea[name=desc]").val();
 
-    // let newObj = $(e.target).serializeJson();
+    const newObj = JSON.stringify({
+      url: url,
+      title: title,
+      rating: rating,
+      desc: desc,
+    });
+    
+    api.updateBookmark(store.edId, newObj)
+      .then(() => {
+        const parsedObj = JSON.parse(newObj);
+        store.changeBookmark(store.edId, parsedObj);
+        store.editing = false;
+        store.edID = null;
+        renderMain();
+        clickEdit();
+        clickDelete();
+      });
+  });
+}
 
-    // api.updateBookmark(id, newObj)
-    //   .then(obj => {
-    //     store.changeBookmark(obj);
-    //     store.editing = false;
-    //     renderMain();
-    //   });
-    store.editing = false;
+function clickDelete() {
+  $('li').on('click', '.delete', function() {
+    const id = $(this).parent().parent().parent().parent().attr('id');
+    api.deleteBookmark(id)
+      .then(() => {
+        store.removeBookmark(id);
+        renderMain();
+        clickEdit();
+        clickDelete();
+      });
+    
+
+
+    renderMain();
+    clickEdit();
+    clickDelete();
+  });
+}
+
+function clickRatingFilter() {
+  $('body').on('change', '#rating-filter', function(e) {
+    const selectedVal = $('#rating-filter option:selected').val();
+    if (selectedVal === '') {
+      store.filter = '0';
+    } else {
+      store.filter = selectedVal;
+    }
+
     renderMain();
   });
 }
-
-// function clickDelete() {
-//   $('li').on('click', '.edit', function() {
-//     console.log('edit clicked');
-
-//     renderMain();
-//   });
-// }
 
 export default {
   renderMain,
@@ -349,4 +387,6 @@ export default {
   clickBookmark,
   clickEdit,
   submitUpdate,
+  clickDelete,
+  clickRatingFilter,
 };

@@ -1,6 +1,8 @@
+
 const localBookmarks = [];
 let adding = false;
 let editing = false;
+let edId = null;
 let error = null;
 let filter = 0;
 
@@ -22,8 +24,12 @@ function addExtrasToBookmarks(localBookmarksArray) {
   });
 }
 
+function findById(id) {
+  return localBookmarks.find(bookmark => bookmark.id === id);
+}
+
 function findIndex(id) {
-  return this.localBookmarks.indexOf(this.localBookmarks.find(bookmark => bookmark.id === id));
+  return localBookmarks.indexOf(localBookmarks.find(bookmark => bookmark.id === id));
 }
 
 function toggleExpanded(index) {
@@ -34,9 +40,16 @@ function toggleExpanded(index) {
   }
 }
 
-function changeBookmark() {
-  
+function changeBookmark(id, newInfo) {
+  let curObj = findById(id);
+  Object.assign(curObj, newInfo);
 }
+
+function removeBookmark(id) {
+  const index = findIndex(id);
+  localBookmarks.splice(index, 1);
+}
+
 
 export default {
   localBookmarks,
@@ -46,6 +59,9 @@ export default {
   filter,
   createStoreArray,
   addNewBookmark,
+  findById,
   findIndex,
   toggleExpanded,
+  changeBookmark,
+  removeBookmark,
 };

@@ -20,6 +20,7 @@ function main() {
       bookLi.submitNew();
       bookLi.clickBookmark();
       bookLi.submitUpdate();
+      bookLi.clickRatingFilter();
     })
   ;
 }
