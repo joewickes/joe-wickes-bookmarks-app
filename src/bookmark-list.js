@@ -53,7 +53,7 @@ function createLiElement(singleBookmark) {
               <button class="edit" id="edit">Edit</button>
             </div>
             <div class="right-button">
-              <button id="delete">Delete</button>
+              <button id="delete" class="delete">Delete</button>
             </div>
           </div>
           <div class="expanded-top">
@@ -241,8 +241,17 @@ function clickEdit() {
     console.log('edit clicked');
 
     renderMain();
+    clickEdit();
   });
 }
+
+// function clickDelete() {
+//   $('li').on('click', '.edit', function() {
+//     console.log('edit clicked');
+
+//     renderMain();
+//   });
+// }
 
 export default {
   renderMain,
