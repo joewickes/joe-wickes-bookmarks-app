@@ -50,7 +50,7 @@ function createLiElement(singleBookmark) {
         <div class="expanded-info">
           <div class="expanded-buttons">
             <div class="left-button">
-              <button id="edit">Edit</button>
+              <button class="edit" id="edit">Edit</button>
             </div>
             <div class="right-button">
               <button id="delete">Delete</button>
@@ -232,15 +232,16 @@ function clickBookmark() {
     // use id to update api and then re-render
     store.toggleExpanded(index);
     renderMain();
+    clickEdit();
   });
 }
 
-function clickVisit() {
-  $('body').on('click', '#visit', function(e) {
-    console.log('Visit clicked');
+function clickEdit() {
+  $('li').on('click', '.edit', function() {
+    console.log('edit clicked');
 
     renderMain();
-  })
+  });
 }
 
 export default {
@@ -249,5 +250,5 @@ export default {
   clickCancel,
   submitNew,
   clickBookmark,
-  clickVisit,
+  clickEdit,
 };
