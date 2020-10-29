@@ -1,3 +1,5 @@
+import bookmarkList from "./bookmark-list";
+
 const baseUrl = 'https://thinkful-list-api.herokuapp.com/joewickes/bookmarks';
 
 function getBookmarks() { // returns an array of current objects
@@ -9,7 +11,6 @@ function getBookmarks() { // returns an array of current objects
 }
 
 function createBookmark(newObj) {
-  
   return fetch(baseUrl, {
     method: 'POST',
     headers: {
@@ -17,8 +18,10 @@ function createBookmark(newObj) {
     },
     body: newObj,
   })
-    .then(response => response.json())
-  ;
+    .then(response => {
+        return response.json();
+      })
+    ;
 }
 
 function updateBookmark(id, editObj) {
@@ -30,6 +33,9 @@ function updateBookmark(id, editObj) {
     body: editObj,
   })
     .then(response => response.json())
+    .catch(error => {
+      console.log(error.message);
+    })
   ;
 }
 

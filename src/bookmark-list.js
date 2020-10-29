@@ -112,7 +112,7 @@ function createFormSection() {
       <form id="new-bookmark-form">
         <div class="link-text-container">
           <label for="link-text">Add a new bookmark</label>
-          <input type="text" name="url" id="link-text" required>
+          <input type="text" name="url" id="link-text" placeholder="url" required>
         </div>
 
         <div class="description-container">
