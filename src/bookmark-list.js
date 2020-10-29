@@ -36,8 +36,46 @@ function createNewAndFilterButtonsSection() {
 
 
 function createLiElement(singleBookmark) {
+  if (singleBookmark.expanded) { // Check against expanded category
+    return `
+      <li id="${singleBookmark.id}">
+        <div class="li-title expanded-title">
+          <div class="left-li-block">
+            <p>${singleBookmark.title}</p>
+          </div>
+          <div class="right-li-block">
+            <p>${singleBookmark.rating} Stars</p>
+          </div>
+        </div>
+        <div class="expanded-info">
+          <div class="expanded-buttons">
+            <div class="left-button">
+              <button id="edit">Edit</button>
+            </div>
+            <div class="right-button">
+              <button id="delete">Delete</button>
+            </div>
+          </div>
+          <div class="expanded-top">
+            <div class="visit-container">
+              <button class="visit-button">Visit Site</button>
+            </div>
+            <div class="expanded-star">
+              <p>${singleBookmark.rating} Stars</p>
+            </div>
+          </div>
+          <div class="description">
+            <div class="expanded-description">
+              <p>${singleBookmark.desc}</p>
+            </div>
+          </div>
+        </div>
+      </li>
+    `;
+  } 
+
   return `
-    <li>
+    <li id="${singleBookmark.id}">
       <div class="li-title">
         <div class="left-li-block">
           <p>${singleBookmark.title}</p>
@@ -167,9 +205,6 @@ $.fn.extend({
     const o = {};
     formData.forEach((val, name) => o[name] = val);
     o.id = cuid();
-    o.expanded = "false";
-    console.log('serialize', o);
-    console.log(JSON.stringify(o));
     return JSON.stringify(o);
   }
 });
@@ -189,9 +224,20 @@ function submitNew() {
   });
 }
 
+function clickBookmark() {
+  $('body').on('click', 'li', function(e) {
+    const id = $(this).attr('id');
+
+    // use id to update api and then re-render
+
+    console.log(id);
+  });
+}
+
 export default {
   renderMain,
   clickNew,
   clickCancel,
   submitNew,
+  clickBookmark,
 };

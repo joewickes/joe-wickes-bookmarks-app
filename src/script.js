@@ -18,6 +18,7 @@ function main() {
       bookLi.clickNew();
       bookLi.clickCancel();
       bookLi.submitNew();
+      bookLi.clickBookmark();
     })
   ;
 }
