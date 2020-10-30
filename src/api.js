@@ -19,9 +19,16 @@ function createBookmark(newObj) {
     body: newObj,
   })
     .then(response => {
+      if (response.ok) {
         return response.json();
-      })
-    ;
+      } else {
+        throw Error(response.statusText);
+      }
+    })
+    .catch(error => {
+      console.log(error.message);
+    })
+  ;
 }
 
 function updateBookmark(id, editObj) {
@@ -32,7 +39,13 @@ function updateBookmark(id, editObj) {
     },
     body: editObj,
   })
-    .then(response => response.json())
+    .then(response => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw Error(response.statusText);
+      }
+    })
     .catch(error => {
       console.log(error.message);
     })
@@ -43,7 +56,17 @@ function deleteBookmark(id) {
   return fetch(baseUrl + `/${id}`, {
     method: 'DELETE',
   })
-    .then(response => response.json())
+    .then(response => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw Error(response.statusText);
+      }
+    })
+    .catch(error => {
+      console.log(error.message);
+    })
+  ;
 }
 
 

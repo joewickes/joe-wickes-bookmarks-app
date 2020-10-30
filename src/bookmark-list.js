@@ -107,12 +107,62 @@ function createAllLiElements(allBookmarks, filter) {
 }
 
 function createFormSection() {
+  if (store.error === 'url') {
+    return `
+      <section class="new-bookmark-section">
+        <form id="new-bookmark-form">
+          <div class="link-text-container">
+            <label for="link-text">Make sure your url has http(s):// in front!</label>
+            <input type="text" name="url" id="link-text" value="https://" required>
+          </div>
+
+          <div class="description-container">
+            <input type="text" name="title" id="link-title" placeholder="Link Title" required>
+            
+            <div class="star-input">
+              <div class="star">
+                <label for="star-1">1</label>
+                <input type="radio" name="rating" id="star-1" value="1">
+              </div>
+              <div class="star">
+                <label for="star-2">2</label>
+                <input type="radio" name="rating" id="star-2" value="2">
+              </div>
+              <div class="star">
+                <label for="star-3">3</label>
+                <input type="radio" name="rating" id="star-3" value="3">
+              </div>
+              <div class="star">
+                <label for="star-4">4</label>
+                <input type="radio" name="rating" id="star-4" value="4">
+              </div>
+              <div class="star">
+                <label for="star-5">5</label>
+                <input type="radio" name="rating" id="star-5" value="5" checked>
+              </div>
+            </div>
+
+            <textarea name="desc" id="" cols="30" rows="10" placeholder="Add a description (optional)" value=""></textarea>
+          </div>
+        </form>
+        <div class="form-buttons">
+          <div class="left-button">
+            <button id="cancel">Cancel</button>
+          </div>
+          <div class="right-button">
+            <button type="submit" id="create" form="new-bookmark-form">Create</button>
+          </div>
+        </div>
+      </section>
+    `;
+  }
+  
   return `
     <section class="new-bookmark-section">
       <form id="new-bookmark-form">
         <div class="link-text-container">
           <label for="link-text">Add a new bookmark</label>
-          <input type="text" name="url" id="link-text" placeholder="url" required>
+          <input type="text" name="url" id="link-text" value="https://" required>
         </div>
 
         <div class="description-container">
@@ -157,12 +207,62 @@ function createFormSection() {
 }
 
 function createUpdateSection() {
+  if (store.error === 'url') {
+    return `
+      <section class="new-bookmark-section">
+        <form id="update-bookmark-form">
+          <div class="link-text-container">
+            <label for="link-text">Make sure your url has http(s):// in front!</label>
+            <input type="text" name="url" id="link-text" value="https://" required>
+          </div>
+
+          <div class="description-container">
+            <input type="text" name="title" id="link-title" placeholder="Link Title" required>
+            
+            <div class="star-input">
+              <div class="star">
+                <label for="star-1">1</label>
+                <input type="radio" name="rating" id="star-1" value="1">
+              </div>
+              <div class="star">
+                <label for="star-2">2</label>
+                <input type="radio" name="rating" id="star-2" value="2">
+              </div>
+              <div class="star">
+                <label for="star-3">3</label>
+                <input type="radio" name="rating" id="star-3" value="3">
+              </div>
+              <div class="star">
+                <label for="star-4">4</label>
+                <input type="radio" name="rating" id="star-4" value="4">
+              </div>
+              <div class="star">
+                <label for="star-5">5</label>
+                <input type="radio" name="rating" id="star-5" value="5" checked>
+              </div>
+            </div>
+
+            <textarea name="desc" id="" cols="30" rows="10" placeholder="Add a description (optional)" value=""></textarea>
+          </div>
+        </form>
+        <div class="form-buttons">
+          <div class="left-button">
+            <button id="cancel">Cancel</button>
+          </div>
+          <div class="right-button">
+            <button type="submit" id="update" form="update-bookmark-form">Update</button>
+          </div>
+        </div>
+      </section>
+    `;
+  }
+  
   return `
     <section class="new-bookmark-section">
       <form id="update-bookmark-form">
         <div class="link-text-container">
           <label for="link-text">Update a bookmark</label>
-          <input type="text" name="url" id="link-text" required>
+          <input type="text" name="url" id="link-text" value="https://" required>
         </div>
 
         <div class="description-container">
@@ -277,18 +377,22 @@ $.fn.extend({
 
 function submitNew() {
   $('body').on('submit', '#new-bookmark-form', function(e) {
-    // if store.editing is true, then submit patch
-    // if store.editing is false, then submit new
     e.preventDefault();
+    const url = $("input[name=url]").val();
+    if (/^(http)s?:\/\/(.)*/g.test(url) === false) {
+      store.error = 'url';
+      renderMain();
+    } else {
+      let newObj = $(e.target).serializeJson();
 
-    let newObj = $(e.target).serializeJson();
-
-    api.createBookmark(newObj)
-      .then(obj => {
-        store.addNewBookmark(obj);
-        store.adding = false;
-        renderMain();
-      });
+      api.createBookmark(newObj)
+        .then(obj => {
+          store.addNewBookmark(obj);
+          store.adding = false;
+          store.error = null;
+          renderMain();
+        });
+    }
   });
 }
 
@@ -323,27 +427,35 @@ function submitUpdate() {
   $('body').on('submit', '#update-bookmark-form', function(e) {
     e.preventDefault();
     const url = $("input[name=url]").val();
-    const title = $("input[name=title]").val();
-    const rating = $("input[name=rating]:checked").val();
-    const desc = $("textarea[name=desc]").val();
 
-    const newObj = JSON.stringify({
-      url: url,
-      title: title,
-      rating: rating,
-      desc: desc,
-    });
-    
-    api.updateBookmark(store.edId, newObj)
-      .then(() => {
-        const parsedObj = JSON.parse(newObj);
-        store.changeBookmark(store.edId, parsedObj);
-        store.editing = false;
-        store.edID = null;
-        renderMain();
-        clickEdit();
-        clickDelete();
+    if (/^(http)s?:\/\/(.)*/g.test(url) === false) {
+      store.error = 'url';
+      renderMain();
+    } else {
+      const title = $("input[name=title]").val();
+      const rating = $("input[name=rating]:checked").val();
+      const desc = $("textarea[name=desc]").val();
+
+      const newObj = JSON.stringify({
+        url: url,
+        title: title,
+        rating: rating,
+        desc: desc,
       });
+      
+      api.updateBookmark(store.edId, newObj)
+        .then(() => {
+          const parsedObj = JSON.parse(newObj);
+          store.changeBookmark(store.edId, parsedObj);
+          store.editing = false;
+          store.edID = null;
+          store.error = null;
+          renderMain();
+          clickEdit();
+          clickDelete();
+        });
+    }
+    
   });
 }
 
