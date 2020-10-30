@@ -120,6 +120,7 @@ function createFormSection() {
             <input type="text" name="title" id="link-title" placeholder="Link Title" required>
             
             <div class="star-input">
+              <p>Rating: </p>
               <div class="star">
                 <label for="star-1">1</label>
                 <input type="radio" name="rating" id="star-1" value="1">
@@ -169,6 +170,7 @@ function createFormSection() {
           <input type="text" name="title" id="link-title" placeholder="Link Title" required>
           
           <div class="star-input">
+            <p>Rating: </p>
             <div class="star">
               <label for="star-1">1</label>
               <input type="radio" name="rating" id="star-1" value="1">
@@ -220,6 +222,7 @@ function createUpdateSection() {
             <input type="text" name="title" id="link-title" placeholder="Link Title" required>
             
             <div class="star-input">
+              <p>Rating: </p>
               <div class="star">
                 <label for="star-1">1</label>
                 <input type="radio" name="rating" id="star-1" value="1">
@@ -269,6 +272,7 @@ function createUpdateSection() {
           <input type="text" name="title" id="link-title" placeholder="Link Title" required>
           
           <div class="star-input">
+            <p>Rating: </p>
             <div class="star">
               <label for="star-1">1</label>
               <input type="radio" name="rating" id="star-1" value="1">
