@@ -31,7 +31,7 @@ All user stories completed
 
 ## Discoveries
 Since I first created this project, I have learned React. This project helped teach me to appreciate some of what React does behind the scenes. Manually 
-re-rendering with a specified template string each time was time-consuming (and slow).
+re-rendering with a specified template string each time has definitely given me some real gratitude for all of the React developers.
 
 ## Future Goals
 - Potentially re-make with React to see how it could be done more simply
