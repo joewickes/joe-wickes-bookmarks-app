@@ -1,8 +1,11 @@
-# joe-wickes-bookmarks-app
+# Bookmarks App
 
-Live Link: https://thinkful-ei-tiger.github.io/joe-wickes-bookmarks-app/
+## Abstract
+The live app can be found at https://thinkful-ei-tiger.github.io/joe-wickes-bookmarks-app/. This app was part of the Thinkful curriculum, meant to solidify
+the lessons about jQuery (for DOM traversal and manipulation) and "render" functionality to lead into the impending React lesson.
 
-User stories completed: 
+## User Features/Stories
+All user stories completed
 
 I can add bookmarks to my bookmark list. Bookmarks contain:
 - title
@@ -26,3 +29,20 @@ Check all validations in the API documentation (e.g. title and url field require
 I can select from a dropdown (a <select> element) a "minimum rating" to filter the list by all bookmarks rated at or above the chosen selection
 
 (Extension feature - optional) I can edit the rating and description of a bookmark in my list
+
+## How To Use It
+- See User Stories Above ^
+
+## Techologies/Tools Used
+- HTML (Semantic, Valid)
+- CSS (Mobile-first, responsive, flexbox)
+- JavaScript (with jQuery)
+
+## Discoveries
+Since I first created this project, I have learned React. This project helped teach me to appreciate some of what React does behind the scenes. Manually 
+re-rendering with a specified template string each time was time-consuming (and slow).
+
+## Future Goals
+- Potentially re-make with React to see how it could be done more simply
+- Refine styling
+- 
